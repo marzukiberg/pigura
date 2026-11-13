@@ -28,6 +28,7 @@
     Calendar,
     HardDrive,
     Maximize2,
+    Pencil,
     Settings,
     Copy,
     Lock,
@@ -87,6 +88,7 @@
     film: Film,
     storage: HardDrive,
     dimensions: Maximize2,
+    edit: Pencil,
   };
 
   let Cmp = $derived(iconMap[name] || ImageIcon);

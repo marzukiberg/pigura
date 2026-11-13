@@ -1,10 +1,12 @@
 <script>
   import { onMount } from 'svelte';
+  import { ContextMenu } from 'bits-ui';
   import Timeline from '../timeline/Timeline.svelte';
   import { api } from '../../core/api.svelte.js';
   import Icon from '../../ui/Icon.svelte';
   import PhotoPicker from './PhotoPicker.svelte';
   import Seg from '../../ui/Seg.svelte';
+  import RenameDialog from '../../ui/RenameDialog.svelte';
   import Thumb from '../../ui/Thumb.svelte';
   import { createThumbState } from '../../ui/thumb.svelte.js';
   import { showToast } from '../../core/toast.svelte.js';
@@ -28,6 +30,7 @@
   let sharing = $state(false);
   let reloadKey = $state(0);
   let segment = $state('all');
+  let renaming = $state(null); // album yang sedang diganti namanya
 
   const SEGMENTS = [
     { id: 'all', label: 'Semua' },
@@ -71,6 +74,17 @@
     load();
   }
 
+  async function doRename(newName) {
+    const al = renaming;
+    const res = await fetch(api(`/api/albums/${al.id}`), { method: 'PATCH', body: JSON.stringify({ name: newName }) });
+    if (!res.ok) throw new Error(res.status === 404 ? 'Album tidak ditemukan.' : 'Gagal mengganti nama album.');
+    const { name } = await res.json();
+    const target = albums.find((a) => a.id === al.id);
+    if (target) target.name = name;
+    renaming = null;
+    showToast(`Album diganti nama menjadi “${name}”`, 2400);
+  }
+
   onMount(load);
   // muat ulang daftar (jumlah item) saat kembali dari detail album
   let prevAlbumId = albumId;
@@ -80,6 +94,25 @@
     prevAlbumId = id;
   });
 </script>
+
+{#snippet albumMenu(al)}
+  <ContextMenu.Portal>
+    <ContextMenu.Content class="ctx-menu">
+      <ContextMenu.Item class="ctx-item" onSelect={() => (renaming = al)}>
+        <Icon name="edit" size={18} />
+        <span>Ganti nama</span>
+      </ContextMenu.Item>
+    </ContextMenu.Content>
+  </ContextMenu.Portal>
+{/snippet}
+
+<RenameDialog
+  open={!!renaming}
+  title="Ganti nama album"
+  value={renaming?.name ?? ''}
+  onsubmit={doRename}
+  oncancel={() => (renaming = null)}
+/>
 
 {#if albumId && !current}
   <div class="albums-page">
@@ -94,10 +127,20 @@
       <button class="ib" onclick={() => navigate('/albums')} aria-label="Kembali ke album">
         <Icon name="back" size={22} />
       </button>
-      <div class="album-meta">
-        <h1>{current.name}</h1>
-        <span class="count-label">{current.count} item</span>
-      </div>
+      <ContextMenu.Root>
+        <ContextMenu.Trigger>
+          {#snippet child({ props })}
+            <div {...props} class="album-meta">
+              <h1>{current.name}</h1>
+              <span class="count-label">{current.count} item</span>
+            </div>
+          {/snippet}
+        </ContextMenu.Trigger>
+        {@render albumMenu(current)}
+      </ContextMenu.Root>
+      <button class="ib" onclick={() => (renaming = current)} aria-label="Ganti nama album" title="Ganti nama album">
+        <Icon name="edit" size={20} />
+      </button>
       <button class="ib" onclick={() => (sharing = true)} aria-label="Bagikan album" title="Bagikan album">
         <Icon name="share" size={20} />
       </button>
@@ -157,19 +200,26 @@
       {/if}
 
       {#each shown as al (al.id)}
-        <a class="card" href={`/albums/${al.id}`} onclick={link}>
-          <span class="cover">
-            {#if al.cover_id}
-              <Thumb src={api(`/api/assets/${al.cover_id}/thumb`)} id={al.id} state={thumbs}>
-                {#snippet fallback()}<span class="cover-icon"><Icon name="album" size={40} /></span>{/snippet}
-              </Thumb>
-            {:else}
-              <span class="cover-icon"><Icon name="album" size={40} /></span>
-            {/if}
-          </span>
-          <span class="nm">{al.name}</span>
-          <span class="sub">{al.count} item</span>
-        </a>
+        <ContextMenu.Root>
+          <ContextMenu.Trigger>
+            {#snippet child({ props })}
+              <a {...props} class="card" href={`/albums/${al.id}`} onclick={link}>
+                <span class="cover">
+                  {#if al.cover_id}
+                    <Thumb src={api(`/api/assets/${al.cover_id}/thumb`)} id={al.id} state={thumbs}>
+                      {#snippet fallback()}<span class="cover-icon"><Icon name="album" size={40} /></span>{/snippet}
+                    </Thumb>
+                  {:else}
+                    <span class="cover-icon"><Icon name="album" size={40} /></span>
+                  {/if}
+                </span>
+                <span class="nm">{al.name}</span>
+                <span class="sub">{al.count} item</span>
+              </a>
+            {/snippet}
+          </ContextMenu.Trigger>
+          {@render albumMenu(al)}
+        </ContextMenu.Root>
       {/each}
     </div>
 
@@ -194,6 +244,31 @@
 {/if}
 
 <style>
+  :global(.ctx-menu) {
+    z-index: 250;
+    min-width: 180px;
+    padding: 6px;
+    border-radius: 14px;
+    background: var(--surface);
+    color: var(--fg);
+    border: 1px solid var(--line);
+    box-shadow: 0 8px 28px rgba(0, 0, 0, 0.3);
+    outline: none;
+  }
+  :global(.ctx-item) {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    height: 38px;
+    padding: 0 12px;
+    border-radius: 9px;
+    font-size: 14px;
+    cursor: pointer;
+    user-select: none;
+    outline: none;
+  }
+  :global(.ctx-item[data-highlighted]) { background: var(--hover); }
+
   .albums-page {
     padding: 12px 12px 32px;
   }

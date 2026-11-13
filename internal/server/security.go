@@ -43,7 +43,7 @@ func (s *Server) secureWith(next http.Handler, pub bool) http.Handler {
 				w.Header().Set("Vary", "Origin")
 				w.Header().Set("Access-Control-Expose-Headers", "Content-Range, Content-Length, Accept-Ranges")
 				if r.Method == http.MethodOptions {
-					w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE")
+					w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE")
 					w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Range, Authorization")
 					w.Header().Set("Access-Control-Max-Age", "600")
 					w.WriteHeader(http.StatusNoContent)

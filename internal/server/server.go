@@ -62,6 +62,7 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /api/assets/{id}/metadata", s.assetMetadata)
 	mux.HandleFunc("GET /api/albums", s.albums)
 	mux.HandleFunc("POST /api/albums", s.createAlbum)
+	mux.HandleFunc("PATCH /api/albums/{id}", s.renameAlbum)
 	mux.HandleFunc("GET /api/albums/{id}/assets", s.albumAssets)
 	mux.HandleFunc("POST /api/albums/{id}/assets", s.addAlbumAssets)
 	mux.HandleFunc("POST /api/scan", s.scan)
