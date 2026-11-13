@@ -24,6 +24,14 @@ tanpa machine learning, RAM sekitar 20 MB saat idle (lihat [Performa](#performa)
 
 <sub>Wajah dan handle pihak ketiga sengaja diburamkan.</sub>
 
+## Demo langsung
+
+Coba di **<https://demo-pigura.ukay.dev>**. Saat diminta kode akses, masukkan `pigura-demo`.
+
+Demo menjalankan image Docker di server Linux kecil dengan media contoh sintetis saja. Kode akses sengaja dibuat
+publik dan memberi akses penuh sebagai pemilik ke instance demo, jadi jangan menaruh data pribadi di sana.
+Demo bisa di-reset atau dimatikan kapan saja.
+
 ## Fitur
 
 - Timeline cepat (keyset pagination), tampilan grid/daftar, filter tanggal, dan jelajah

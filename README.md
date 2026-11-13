@@ -24,6 +24,14 @@ No database server, no machine learning, about 20 MB of RAM at idle (see [Perfor
 
 <sub>Faces and third-party handles are blurred. The UI is shown in Indonesian.</sub>
 
+## Live demo
+
+Try it at **<https://demo-pigura.ukay.dev>**. When asked for the access code, enter `pigura-demo`.
+
+The demo runs the Docker image on a small Linux server with synthetic sample media only. The access code is
+public on purpose and gives full owner access to the demo instance, so don't put anything private there.
+It may be reset or taken down at any time.
+
 ## Features
 
 - Timeline with fast keyset pagination, grid / list views, date filter and "explore"
