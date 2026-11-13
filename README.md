@@ -39,6 +39,20 @@ No database server, no machine learning, about 20 MB of RAM at idle (see [Perfor
 
 Status: early (v0.x). The UI is currently in Indonesian; i18n is welcome as a contribution.
 
+> [!WARNING]
+> **Security disclaimer.** Pigura is early-stage software (v0.x), provided "as is" under the MIT license, without warranty.
+>
+> - **There are no user accounts.** Access control is a single, *optional* shared token (`PIGURA_TOKEN`). **If you do not
+>   set it, anyone who can reach the port can view, hide and share your photos.** Always set it unless Pigura is only
+>   reachable from `127.0.0.1`, for example: `export PIGURA_TOKEN=$(openssl rand -hex 32)`.
+>   In `docker-compose.yml` the token line is commented out by default; uncomment it.
+> - **Do not expose the main port directly to the internet.** Use a TLS reverse proxy or a private network (VPN,
+>   Tailscale, ...). Publish only the separate share-link listener (`PIGURA_PUBLIC_ADDR`) if you need public links.
+> - Logins are not individually revocable and there is no logout: the only way to invalidate a session is to change the token.
+> - Pigura decodes untrusted media with libvips, libheif and ffmpeg. Keep them updated and run Pigura as an unprivileged
+>   user with the library mounted read-only.
+> - Pigura never modifies or deletes your original files, but it is **not a backup**. Keep your own backups.
+
 ## Quick start (Docker)
 
 ```sh

@@ -38,6 +38,20 @@ tanpa machine learning, RAM sekitar 20 MB saat idle (lihat [Performa](#performa)
 
 Status: awal (v0.x). UI saat ini berbahasa Indonesia; kontribusi i18n sangat diterima.
 
+> [!WARNING]
+> **Disclaimer keamanan.** Pigura masih tahap awal (v0.x), disediakan "apa adanya" di bawah lisensi MIT, tanpa garansi.
+>
+> - **Tidak ada akun pengguna.** Kontrol akses hanya satu token bersama yang *opsional* (`PIGURA_TOKEN`). **Jika tidak
+>   diisi, siapa pun yang bisa menjangkau port-nya dapat melihat, menyembunyikan, dan membagikan fotomu.** Selalu isi,
+>   kecuali Pigura hanya bisa diakses dari `127.0.0.1`, misalnya: `export PIGURA_TOKEN=$(openssl rand -hex 32)`.
+>   Di `docker-compose.yml` baris token dikomentari secara default; hapus tanda komentarnya.
+> - **Jangan ekspos port utama langsung ke internet.** Pakai reverse proxy ber-TLS atau jaringan privat (VPN, Tailscale,
+>   dll). Publikasikan hanya listener tautan berbagi (`PIGURA_PUBLIC_ADDR`) bila butuh tautan publik.
+> - Login tidak bisa dicabut satu per satu dan belum ada logout: satu-satunya cara membatalkan sesi adalah mengganti token.
+> - Pigura men-decode media tak tepercaya lewat libvips, libheif, dan ffmpeg. Perbarui ketiganya dan jalankan Pigura sebagai
+>   user tanpa hak istimewa dengan library di-mount read-only.
+> - Pigura tidak pernah mengubah atau menghapus file aslimu, tetapi ini **bukan backup**. Simpan backup sendiri.
+
 ## Mulai cepat (Docker)
 
 ```sh
