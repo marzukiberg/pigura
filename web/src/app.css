@@ -1,0 +1,179 @@
+:root {
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-variant: #f0f4f9;
+  --fg: #1f1f1f;
+  --fg-variant: #444746;
+  --mut: #5f6368;
+  --line: #e0e2e5;
+  --line-subtle: #f1f3f4;
+  --hover: #f1f3f4;
+  --hover-subtle: #f8fafd;
+  --tile: #edf2f7;
+  --tile-shimmer: linear-gradient(90deg, #edf2f7 0%, #e2e8f0 50%, #edf2f7 100%);
+  --acc: #1a73e8;
+  --acc-hover: #1557b0;
+  --acc-bg: #c2e7ff;
+  --acc-fg: #001d35;
+  --bar: rgba(255, 255, 255, 0.96);
+  --search-bg: #eaf1fb;
+  --search-focus-bg: #ffffff;
+  --card-shadow: 0 1px 2px 0 rgba(60,64,67,0.3), 0 1px 3px 1px rgba(60,64,67,0.15);
+  --elevated-shadow: 0 2px 6px 2px rgba(60,64,67,0.15);
+  --font: 'Google Sans', Roboto, -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
+  --google-blue: #4285f4;
+  --google-red: #ea4335;
+  --google-yellow: #fbbc04;
+  --google-green: #34a853;
+  color-scheme: light;
+}
+
+[data-theme="dark"],
+:root:not([data-theme="light"]) {
+  @media (prefers-color-scheme: dark) {
+    --bg: #131314;
+    --surface: #1e1f20;
+    --surface-variant: #282a2c;
+    --fg: #e3e3e3;
+    --fg-variant: #c4c7c5;
+    --mut: #8e918f;
+    --line: #3c4043;
+    --line-subtle: #2d2f31;
+    --hover: #282a2d;
+    --hover-subtle: #212325;
+    --tile: #242628;
+    --tile-shimmer: linear-gradient(90deg, #242628 0%, #303336 50%, #242628 100%);
+    --acc: #8ab4f8;
+    --acc-hover: #aecbfa;
+    --acc-bg: #004a77;
+    --acc-fg: #c2e7ff;
+    --bar: rgba(19, 19, 20, 0.96);
+    --search-bg: #282a2d;
+    --search-focus-bg: #303134;
+    --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 4px 8px 3px rgba(0,0,0,0.3);
+    --elevated-shadow: 0 4px 12px rgba(0,0,0,0.6);
+    color-scheme: dark;
+  }
+}
+
+[data-theme="dark"] {
+  --bg: #131314;
+  --surface: #1e1f20;
+  --surface-variant: #282a2c;
+  --fg: #e3e3e3;
+  --fg-variant: #c4c7c5;
+  --mut: #8e918f;
+  --line: #3c4043;
+  --line-subtle: #2d2f31;
+  --hover: #282a2d;
+  --hover-subtle: #212325;
+  --tile: #242628;
+  --tile-shimmer: linear-gradient(90deg, #242628 0%, #303336 50%, #242628 100%);
+  --acc: #8ab4f8;
+  --acc-hover: #aecbfa;
+  --acc-bg: #004a77;
+  --acc-fg: #c2e7ff;
+  --bar: rgba(19, 19, 20, 0.96);
+  --search-bg: #282a2d;
+  --search-focus-bg: #303134;
+  --card-shadow: 0 1px 3px rgba(0,0,0,0.5), 0 4px 8px 3px rgba(0,0,0,0.3);
+  --elevated-shadow: 0 4px 12px rgba(0,0,0,0.6);
+  color-scheme: dark;
+}
+
+* {
+  box-sizing: border-box;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font);
+  font-size: 14px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+button, a {
+  touch-action: manipulation; /* tanpa jeda 300ms & zoom dobel-ketuk */
+}
+
+button {
+  font: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+input {
+  font: inherit;
+  color: inherit;
+}
+
+h1, h2, h3, h4 {
+  margin: 0;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+}
+
+/* Scrollbar halus ala Google */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--line);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--mut);
+}
+
+/* Ikon berputar (dipakai lewat class="spin" pada <Icon>) */
+@keyframes icon-spin {
+  to { transform: rotate(360deg); }
+}
+
+svg.spin {
+  animation: icon-spin 0.9s linear infinite;
+  transform-origin: center;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  svg.spin { animation-duration: 2.4s; }
+}
+
+/* Animasi skeleton shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+
+.shimmer {
+  background: var(--tile-shimmer);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite ease-in-out;
+}
+
+/* iOS memperbesar halaman otomatis bila input fokus dengan font < 16px */
+@media (max-width: 700px) {
+  input, select, textarea { font-size: 16px !important; }
+}

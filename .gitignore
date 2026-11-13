@@ -1,0 +1,14 @@
+/bin/
+/data/
+*.db
+*.db-wal
+*.db-shm
+.DS_Store
+.env
+*.env
+web/node_modules/
+internal/web/dist/*
+!internal/web/dist/.gitkeep
+
+# Screenshot mentah (belum disensor). Hanya docs/screenshots/ yang boleh dipublikasikan.
+/assets/

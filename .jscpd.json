@@ -1,0 +1,11 @@
+{
+  "path": ["cmd", "internal", "web/src"],
+  "format": ["go", "javascript", "svelte", "css", "markup"],
+  "minTokens": 50,
+  "minLines": 5,
+  "threshold": 2,
+  "ignore": ["**/node_modules/**", "**/dist/**", "**/*_test.go", "**/*.min.*"],
+  "reporters": ["console"],
+  "gitignore": true,
+  "absolute": false
+}

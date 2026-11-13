@@ -1,0 +1,26 @@
+services:
+  pigura:
+    image: ghcr.io/marzukiberg/pigura:latest   # or: build: .
+    # build: .
+    restart: unless-stopped
+    ports:
+      # Bound to localhost on purpose. Put a TLS reverse proxy in front, or change to
+      # "8080:8080" only on a network you trust. Pigura has no user accounts.
+      - "127.0.0.1:8080:8080"
+    volumes:
+      - /path/to/your/photos:/media/photos:ro   # read-only: Pigura never modifies originals
+      - pigura-data:/data                 # SQLite index + thumbnail cache
+    environment:
+      # Strongly recommended: require a login (long random string).
+      # PIGURA_TOKEN: change-me-to-a-long-random-string
+      # Needed when you reach Pigura through a hostname behind a reverse proxy:
+      # PIGURA_ALLOWED_HOSTS: photos.example.com
+      PIGURA_SCAN_INTERVAL: 10m
+    read_only: true
+    tmpfs: [/tmp]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+    mem_limit: 512m
+
+volumes:
+  pigura-data:

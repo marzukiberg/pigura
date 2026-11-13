@@ -1,0 +1,10 @@
+.git
+.github
+bin
+data
+*.db
+*.db-wal
+*.db-shm
+web/node_modules
+internal/web/dist/*
+!internal/web/dist/.gitkeep

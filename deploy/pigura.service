@@ -1,0 +1,53 @@
+# Example hardened systemd unit.
+#   sudo useradd --system --no-create-home --shell /usr/sbin/nologin pigura
+#   sudo install -m0755 pigura /opt/pigura/pigura && sudo install -d -o pigura -g pigura -m0750 /var/lib/pigura
+#   sudo install -m0644 deploy/pigura.service /etc/systemd/system/ && sudo systemctl enable --now pigura
+# Secrets/options (root:root 0600) go in /etc/pigura.env, e.g. PIGURA_TOKEN=<long random string>
+[Unit]
+Description=Pigura (lightweight photo viewer)
+After=network-online.target
+
+[Service]
+User=pigura
+Group=pigura
+ExecStart=/opt/pigura/pigura -addr 127.0.0.1:8080 \
+  -db /var/lib/pigura/pigura.db \
+  -cache /var/lib/pigura/cache \
+  -scan-base /srv \
+  -library /srv/photos
+EnvironmentFile=-/etc/pigura.env
+Environment=GOMEMLIMIT=150MiB
+Environment=PIGURA_SCAN_INTERVAL=10m
+Restart=on-failure
+# Low-RAM devices: thumbnail child processes (vips/ffmpeg) count against the cgroup.
+MemoryMax=512M
+
+# Hardening: the service parses untrusted media with libvips/libheif/ffmpeg.
+ReadOnlyPaths=/srv/photos
+ReadWritePaths=/var/lib/pigura
+UMask=0077
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectKernelLogs=true
+ProtectControlGroups=true
+ProtectClock=true
+ProtectHostname=true
+ProtectProc=invisible
+ProcSubset=pid
+RestrictNamespaces=true
+RestrictRealtime=true
+RestrictSUIDSGID=true
+LockPersonality=true
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+CapabilityBoundingSet=
+AmbientCapabilities=
+SystemCallArchitectures=native
+SystemCallFilter=@system-service
+
+[Install]
+WantedBy=multi-user.target
