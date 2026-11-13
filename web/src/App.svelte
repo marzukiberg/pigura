@@ -29,7 +29,7 @@
     document.title =
       (setup.configured && !setup.needsLibrary) || tab === 'share'
         ? buildTitle(tab, { photo: titleState.photo, album: titleState.album })
-        : 'Pengaturan awal · pigura';
+        : 'Pengaturan awal · Pigura';
   });
 
   // Lightbox: /photos/:id di tab Foto, ?photo=ID di tab lain. Pindah antar foto
@@ -160,6 +160,9 @@
     .content {
         padding: 12px 24px 32px 16px;
         overflow-y: auto;
+        /* Cadangkan ruang scrollbar: tanpa ini lebar konten berubah saat scrollbar muncul/hilang,
+           grid ikut dihitung ulang, tinggi berubah, scrollbar berganti lagi (kedip tanpa henti). */
+        scrollbar-gutter: stable;
       }
   }
 

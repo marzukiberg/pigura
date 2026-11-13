@@ -19,7 +19,7 @@ export const setup = $state({
 
 const sameOrigin = () => connection.baseUrl.replace(/\/+$/, '') === window.location.origin;
 
-/** Apa yang dilayani origin ini? 'owner' = API pigura, 'public' = hanya tautan berbagi, 'none'. */
+/** Apa yang dilayani origin ini? 'owner' = API Pigura, 'public' = hanya tautan berbagi, 'none'. */
 async function probeOrigin() {
   try {
     const res = await fetch(`${window.location.origin}/api/auth/status`);

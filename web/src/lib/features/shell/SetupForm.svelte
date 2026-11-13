@@ -17,7 +17,7 @@
       <label>
         <span>URL proxy / server</span>
         <input bind:value={connection.baseUrl} inputmode="url" placeholder="http://100.x.y.z:PORT" />
-        <small>Alamat server pigura (mis. http://192.168.1.10:8080). UI yang dilayani server itu sendiri tidak perlu mengisi ini.</small>
+        <small>Alamat server Pigura (mis. http://192.168.1.10:8080). UI yang dilayani server itu sendiri tidak perlu mengisi ini.</small>
       </label>
     {/if}
     <label>

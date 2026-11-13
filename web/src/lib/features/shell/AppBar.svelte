@@ -18,7 +18,7 @@
         <path fill="var(--google-green, #34a853)" d="M12 22a5 5 0 0 1-5-5v-5h5a5 5 0 0 1 5 5 5 5 0 0 1-5 5z"/>
         <path fill="var(--google-blue, #4285f4)" d="M2 12a5 5 0 0 1 5-5h5v5a5 5 0 0 1-5 5 5 5 0 0 1-5-5z"/>
       </svg>
-      <span class="brand-name">Foto</span>
+      <span class="brand-name">Pigura</span>
     </a>
   </div>
 

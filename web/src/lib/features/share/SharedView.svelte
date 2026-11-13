@@ -144,7 +144,7 @@
         {/each}
       </div>
     {/if}
-    <footer>Dibagikan lewat pigura</footer>
+    <footer>Dibagikan lewat Pigura</footer>
   {/if}
 </main>
 

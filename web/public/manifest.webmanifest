@@ -1,6 +1,6 @@
 {
-  "name": "pigura",
-  "short_name": "Foto",
+  "name": "Pigura",
+  "short_name": "Pigura",
   "start_url": "/",
   "display": "standalone",
   "background_color": "#111111",
