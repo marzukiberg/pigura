@@ -158,7 +158,6 @@
     refresh();
     return () => {
       clearTimeout(timer);
-      clearTimeout(toastTimer);
     };
   });
 </script>

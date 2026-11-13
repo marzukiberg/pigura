@@ -26,6 +26,7 @@ This file is also shown inside the app under Settings → About, so keep each en
 - `.dockerignore` excludes `.env` files from the build context.
 
 ### Fixed
+- Leaving the Duplicates page threw `toastTimer is not defined` and left the next page stuck on "Memuat foto…".
 - Square layout flickering on desktop when the scrollbar appeared and disappeared.
 - `package-lock.json` was out of sync, which broke `npm ci` and the Docker build.
 
