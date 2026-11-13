@@ -1,8 +1,21 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
-import { readFileSync } from 'node:fs';
+import { execSync } from 'node:child_process';
 
-const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
+// Versi build: env VERSION (Makefile/Docker/CI) -> git describe (dev lokal) -> "dev".
+// Sumber kebenarannya git tag; package.json sengaja tidak menyimpan versi.
+function appVersion() {
+  if (process.env.VERSION) return process.env.VERSION;
+  try {
+    return execSync('git describe --tags --always --dirty', { stdio: ['ignore', 'pipe', 'ignore'] })
+      .toString()
+      .trim()
+      .replace(/^v/, '');
+  } catch {
+    return 'dev';
+  }
+}
+const version = appVersion();
 
 // Dev proxy target. Defaults to a local backend (make run); override with VITE_API_URL
 // to point at another Pigura server.

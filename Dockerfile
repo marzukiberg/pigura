@@ -2,6 +2,8 @@
 
 # --- 1. frontend ---
 FROM node:22-alpine AS web
+# .git is not in the build context; pass it: docker build --build-arg VERSION=$(git describe --tags --always)
+ARG VERSION=dev
 WORKDIR /src/web
 COPY web/package.json web/package-lock.json ./
 RUN npm ci --no-audit --no-fund
@@ -9,7 +11,7 @@ COPY web/ ./
 # imported by the frontend (About / changelog), lives outside web/
 COPY CHANGELOG.md /src/CHANGELOG.md
 # vite.config.js writes to ../internal/web/dist
-RUN mkdir -p /src/internal/web/dist && npm run build
+RUN mkdir -p /src/internal/web/dist && VERSION=$VERSION npm run build
 
 # --- 2. backend (static, no cgo) ---
 FROM golang:1.26-alpine AS build
@@ -18,9 +20,9 @@ COPY go.mod go.sum ./
 RUN go mod download
 COPY . .
 COPY --from=web /src/internal/web/dist ./internal/web/dist
-ARG TARGETOS TARGETARCH
+ARG TARGETOS TARGETARCH VERSION=dev
 RUN CGO_ENABLED=0 GOOS=$TARGETOS GOARCH=$TARGETARCH \
-    go build -trimpath -ldflags="-s -w" -o /out/pigura ./cmd/pigura
+    go build -trimpath -ldflags="-s -w -X main.version=${VERSION}" -o /out/pigura ./cmd/pigura
 
 # --- 3. runtime ---
 FROM alpine:3.22

@@ -4,6 +4,7 @@ import (
 	"context"
 	"errors"
 	"flag"
+	"fmt"
 	"io/fs"
 	"log"
 	"net"
@@ -22,6 +23,9 @@ import (
 	"github.com/marzukiberg/pigura/internal/thumbs"
 	"github.com/marzukiberg/pigura/internal/web"
 )
+
+// version diisi saat build: -ldflags "-X main.version=1.2.3" (lihat Makefile / Dockerfile / release.yml).
+var version = "dev"
 
 func env(k, def string) string {
 	if v := os.Getenv(k); v != "" {
@@ -60,7 +64,13 @@ func main() {
 	staticDir := flag.String("static", env("PIGURA_STATIC_DIR", ""), "folder frontend hasil build; menimpa yang tertanam di binary (kosong = hanya tertanam)")
 	scan := flag.Bool("scan", false, "scan library saat start")
 	scanEvery := flag.Duration("scan-interval", envDuration("PIGURA_SCAN_INTERVAL", 0), "pindai library berkala (mis. 5m); 0 = nonaktif")
+	showVersion := flag.Bool("version", false, "tampilkan versi lalu keluar")
 	flag.Parse()
+	if *showVersion {
+		fmt.Println("pigura", version)
+		return
+	}
+	log.Printf("pigura %s", version)
 
 	d, err := db.Open(*dbPath)
 	if err != nil {
@@ -108,7 +118,7 @@ func main() {
 		log.Printf("tool thumbnail: %v, cache=%s", gen.Tools(), *cache)
 	}
 
-	s := &server.Server{DB: d, Library: *library, ScanBase: *scanBase, Gen: gen, Static: staticFS(*staticDir),
+	s := &server.Server{Version: version, DB: d, Library: *library, ScanBase: *scanBase, Gen: gen, Static: staticFS(*staticDir),
 		// Keamanan: dibaca dari env agar rahasia tidak muncul di daftar proses.
 		Token:          os.Getenv("PIGURA_TOKEN"),
 		AllowedHosts:   server.SplitList(os.Getenv("PIGURA_ALLOWED_HOSTS")),

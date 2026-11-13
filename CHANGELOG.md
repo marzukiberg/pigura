@@ -8,16 +8,20 @@ This file is also shown inside the app under Settings → About, so keep each en
 
 ## [Unreleased]
 
+## [0.2.0] - 2026-11-13
+
 ### Added
 - Rename albums: right-click an album card (or long-press on touch), or use the pencil button inside an album. Backed by the new `PATCH /api/albums/{id}`.
 - Renaming an album also updates the title of its existing share links.
 - About section and changelog viewer in Settings.
+- Versioning from git tags: `pigura -version`, a `version` field in `/api/health`, and the same version embedded in the binary, Docker image and UI.
 - Live demo at demo-pigura.ukay.dev (access code in the README).
 - `make cross`, `make build-go`, `make fmt` and `make fmt-check` targets.
 
 ### Changed
 - Settings uses a two-column layout on wide screens (>=1200px) instead of one long left-aligned column.
 - Brand is now written "Pigura" everywhere; the home tab title is just "Pigura".
+- The version is no longer stored in `web/package.json`; builds take it from the git tag (`make version` prints it).
 - `make web` uses `npm ci` for reproducible frontend builds.
 - `.dockerignore` excludes `.env` files from the build context.
 

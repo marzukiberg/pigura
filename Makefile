@@ -4,15 +4,23 @@ PKG        := ./cmd/pigura
 SCAN_BASE  ?= /srv/photos
 LIBRARY    ?=
 
+# Version = git tag (v0.2.0 -> 0.2.0; between tags 0.2.0-3-gabc1234[-dirty]); "dev" outside a git checkout.
+# Override with: make build VERSION=1.2.3
+VERSION ?= $(patsubst v%,%,$(shell git describe --tags --always --dirty 2>/dev/null || echo dev))
+export VERSION
+
 # Release-style flags, shared by every Go build target (static, no cgo).
-GOFLAGS_BUILD := -trimpath -ldflags="-s -w"
+GOFLAGS_BUILD := -trimpath -ldflags="-s -w -X main.version=$(VERSION)"
 export CGO_ENABLED ?= 0
 
 .DEFAULT_GOAL := help
-.PHONY: help web dist-clean build build-go cross arm64 run test fmt fmt-check dup check docker clean
+.PHONY: help version web dist-clean build build-go cross arm64 run test fmt fmt-check dup check docker clean
 
 help: ## List targets
 	@awk -F':.*## ' '/^[a-zA-Z0-9_-]+:.*## /{printf "  \033[1m%-12s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+
+version: ## Print the version that builds will embed
+	@echo $(VERSION)
 
 web: ## Build the frontend (web/ -> internal/web/dist)
 	cd web && npm ci --no-audit --no-fund && npm run build
@@ -58,7 +66,7 @@ dup: ## Code duplication check (jscpd; threshold in .jscpd.json)
 check: fmt-check test dup ## Everything CI runs
 
 docker: ## Build the Docker image locally (pigura:dev)
-	docker build -t pigura:dev .
+	docker build --build-arg VERSION=$(VERSION) -t pigura:dev .
 
 clean: ## Remove build output
 	rm -rf bin

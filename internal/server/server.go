@@ -17,6 +17,7 @@ import (
 
 // Server menampung dependensi handler.
 type Server struct {
+	Version  string // versi build (ditampilkan di /api/health)
 	DB       *sql.DB
 	Library  string            // root file asli (read-only)
 	ScanBase string            // induk aman untuk library yang boleh dipindai

@@ -65,3 +65,15 @@ func TestRenameAlbumBlocksCrossOriginAndNeedsToken(t *testing.T) {
 		t.Fatalf("tanpa token harus 401, dapat %d", rec.Code)
 	}
 }
+
+func TestHealthReportsVersion(t *testing.T) {
+	s, _ := newTestServer(t)
+	s.Version = "1.2.3-test"
+	rec := do(s.Handler(), "GET", "/api/health", "localhost", nil, "")
+	if rec.Code != http.StatusOK {
+		t.Fatalf("health = %d", rec.Code)
+	}
+	if got := jsonBody(rec)["version"]; got != "1.2.3-test" {
+		t.Fatalf("version = %v", got)
+	}
+}

@@ -3,13 +3,15 @@
 
   const GROUP_LABELS = { Added: 'Baru', Changed: 'Diubah', Fixed: 'Diperbaiki', Removed: 'Dihapus', Security: 'Keamanan', Deprecated: 'Usang' };
   const label = (t) => GROUP_LABELS[t] ?? t;
+  // Rilis (0.2.0) diberi awalan v; build dev/antar-tag (dev, 3ce6995, 0.2.0-3-gabc-dirty) tampil apa adanya.
+  const shown = /^\d+\.\d+\.\d+$/.test(APP_VERSION) ? `v${APP_VERSION}` : APP_VERSION;
 </script>
 
 <section class="about">
   <h2>Tentang</h2>
 
   <div class="app">
-    <div class="name">Pigura <span class="ver">v{APP_VERSION}</span></div>
+    <div class="name">Pigura <span class="ver">{shown}</span></div>
     <p>Penampil foto &amp; video self-hosted yang ringan. “Pigura” berarti bingkai foto.</p>
     <p class="links">
       <a href={REPO_URL} target="_blank" rel="noopener noreferrer">GitHub</a>

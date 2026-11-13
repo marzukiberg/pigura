@@ -56,7 +56,7 @@ func (s *Server) health(w http.ResponseWriter, r *http.Request) {
 	}
 	writeJSON(w, 200, map[string]any{
 		"ok": true, "assets": n, "pending": pending,
-		"scanning": s.scanning.Load(),
+		"scanning": s.scanning.Load(), "version": s.Version,
 	})
 }
 
