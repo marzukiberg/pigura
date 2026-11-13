@@ -90,6 +90,7 @@ type assetRow struct {
 	Rel   string
 	Type  string
 	Mtime int64
+	Width int // 0 = dimensi belum tercatat (perlu diisi dari thumbnail); <0 = gagal dibuat
 }
 
 func (s *Server) assetFromRequest(r *http.Request) (assetRow, error) {
@@ -99,8 +100,8 @@ func (s *Server) assetFromRequest(r *http.Request) (assetRow, error) {
 	}
 	a := assetRow{ID: id}
 	err = s.DB.QueryRowContext(r.Context(),
-		`SELECT path, type, mtime FROM asset WHERE id = ? AND deleted_at IS NULL`, id).
-		Scan(&a.Rel, &a.Type, &a.Mtime)
+		`SELECT path, type, mtime, width FROM asset WHERE id = ? AND deleted_at IS NULL`, id).
+		Scan(&a.Rel, &a.Type, &a.Mtime, &a.Width)
 	return a, err
 }
 
@@ -159,7 +160,9 @@ func (s *Server) thumb(w http.ResponseWriter, r *http.Request) {
 	if !ok {
 		return
 	}
-	dst, err := s.ensureThumb(r.Context(), a, full, false)
+	// Scan mereset dimensi ke 0 saat mtime berubah, tetapi thumbnail di cache bisa masih dianggap segar
+	// (mis. mtime mundur): catat dimensinya dari cache, bila tidak layout Grid macet jadi persegi.
+	dst, err := s.ensureThumb(r.Context(), a, full, a.Width == 0)
 	if errors.Is(err, thumbs.ErrBusy) {
 		w.Header().Set("Retry-After", "3")
 		httpErr(w, http.StatusServiceUnavailable, "busy, retry shortly")
