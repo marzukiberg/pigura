@@ -13,16 +13,19 @@ tanpa machine learning, RAM sekitar 20 MB saat idle (lihat [Performa](#performa)
 
 <table>
   <tr>
-    <td><img src="docs/screenshots/timeline.png" alt="Timeline grouped by day"><br><sub>Timeline, dikelompokkan per hari</sub></td>
-    <td><img src="docs/screenshots/lightbox.png" alt="Photo lightbox"><br><sub>Lightbox: zoom, favorit, unduh, bagikan</sub></td>
+    <td><img src="docs/screenshots/timeline.jpg" alt="Timeline grouped by day"><br><sub>Timeline, dikelompokkan per hari</sub></td>
+    <td><img src="docs/screenshots/lightbox.jpg" alt="Photo lightbox"><br><sub>Lightbox: zoom, favorit, unduh, bagikan</sub></td>
   </tr>
   <tr>
-    <td><img src="docs/screenshots/explore.png" alt="Explore view"><br><sub>Jelajah: filter jenis atau tanggal</sub></td>
-    <td><img src="docs/screenshots/albums.png" alt="Albums"><br><sub>Albums</sub></td>
+    <td><img src="docs/screenshots/explore.jpg" alt="Explore view"><br><sub>Jelajah: filter jenis atau tanggal</sub></td>
+    <td><img src="docs/screenshots/albums.jpg" alt="Album view"><br><sub>Album, bisa ganti nama dan dibagikan</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="docs/screenshots/duplicates.jpg" alt="Duplicate finder" width="50%"><br><sub>Cek duplikat: hanya file berisi identik, yang tertua disimpan secara bawaan</sub></td>
   </tr>
 </table>
 
-<sub>Wajah dan handle pihak ketiga sengaja diburamkan.</sub>
+<sub>Tangkapan layar diambil dari [demo langsung](#demo-langsung) dengan foto contoh.</sub>
 
 ## Demo langsung
 

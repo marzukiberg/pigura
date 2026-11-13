@@ -13,16 +13,19 @@ No database server, no machine learning, about 20 MB of RAM at idle (see [Perfor
 
 <table>
   <tr>
-    <td><img src="docs/screenshots/timeline.png" alt="Timeline grouped by day"><br><sub>Timeline, grouped by day</sub></td>
-    <td><img src="docs/screenshots/lightbox.png" alt="Photo lightbox"><br><sub>Lightbox with zoom, favorite, download, share</sub></td>
+    <td><img src="docs/screenshots/timeline.jpg" alt="Timeline grouped by day"><br><sub>Timeline, grouped by day</sub></td>
+    <td><img src="docs/screenshots/lightbox.jpg" alt="Photo lightbox"><br><sub>Lightbox with zoom, favorite, download, share</sub></td>
   </tr>
   <tr>
-    <td><img src="docs/screenshots/explore.png" alt="Explore view"><br><sub>Explore: filter by type or date</sub></td>
-    <td><img src="docs/screenshots/albums.png" alt="Albums"><br><sub>Albums</sub></td>
+    <td><img src="docs/screenshots/explore.jpg" alt="Explore view"><br><sub>Explore: filter by type or date</sub></td>
+    <td><img src="docs/screenshots/albums.jpg" alt="Album view"><br><sub>Albums, with rename and share</sub></td>
+  </tr>
+  <tr>
+    <td colspan="2" align="center"><img src="docs/screenshots/duplicates.jpg" alt="Duplicate finder" width="50%"><br><sub>Duplicate finder: byte-identical files only, keep the oldest by default</sub></td>
   </tr>
 </table>
 
-<sub>Faces and third-party handles are blurred. The UI is shown in Indonesian.</sub>
+<sub>Screenshots are taken from the public [live demo](#live-demo) with sample photos. The UI is shown in Indonesian.</sub>
 
 ## Live demo
 
