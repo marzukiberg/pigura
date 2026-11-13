@@ -21,7 +21,8 @@ No database server, no machine learning, about 20 MB of RAM at idle (see [Perfor
     <td><img src="docs/screenshots/albums.jpg" alt="Album view"><br><sub>Albums, with rename and share</sub></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="docs/screenshots/duplicates.jpg" alt="Duplicate finder" width="50%"><br><sub>Duplicate finder: byte-identical files only, keep the oldest by default</sub></td>
+    <td><img src="docs/screenshots/duplicates.jpg" alt="Duplicate finder"><br><sub>Duplicate finder: byte-identical files only, keep the oldest by default</sub></td>
+    <td><img src="docs/screenshots/settings.jpg" alt="Settings"><br><sub>Settings: library, theme, share links, about and changelog</sub></td>
   </tr>
 </table>
 

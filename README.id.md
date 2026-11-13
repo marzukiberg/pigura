@@ -21,7 +21,8 @@ tanpa machine learning, RAM sekitar 20 MB saat idle (lihat [Performa](#performa)
     <td><img src="docs/screenshots/albums.jpg" alt="Album view"><br><sub>Album, bisa ganti nama dan dibagikan</sub></td>
   </tr>
   <tr>
-    <td colspan="2" align="center"><img src="docs/screenshots/duplicates.jpg" alt="Duplicate finder" width="50%"><br><sub>Cek duplikat: hanya file berisi identik, yang tertua disimpan secara bawaan</sub></td>
+    <td><img src="docs/screenshots/duplicates.jpg" alt="Duplicate finder"><br><sub>Cek duplikat: hanya file berisi identik, yang tertua disimpan secara bawaan</sub></td>
+    <td><img src="docs/screenshots/settings.jpg" alt="Settings"><br><sub>Pengaturan: library, tema, tautan berbagi, tentang dan changelog</sub></td>
   </tr>
 </table>
 
