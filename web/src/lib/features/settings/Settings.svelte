@@ -2,6 +2,7 @@
   import Icon from '../../ui/Icon.svelte';
   import SharesList from '../share/SharesList.svelte';
   import Seg from '../../ui/Seg.svelte';
+  import About from './About.svelte';
   import { connection } from '../../core/api.svelte.js';
   import { setup } from '../../core/connection.svelte.js';
 
@@ -17,6 +18,8 @@
 <div class="settings">
   <h1>Pengaturan</h1>
 
+  <div class="cols">
+  <div class="col">
   <section>
     <h2>Koneksi</h2>
     {#if !setup.auto}
@@ -40,8 +43,6 @@
     <Seg role="tab" variant="inline" size="sm" px={18} label="Tema" options={THEMES} value={theme} onchange={ontheme} />
   </section>
 
-  <SharesList />
-
   <section>
     <h2>Pustaka</h2>
     <div class="stat">
@@ -56,6 +57,13 @@
       <span>Pindai ulang</span>
     </button>
   </section>
+  </div>
+
+  <div class="col">
+    <SharesList />
+    <About />
+  </div>
+  </div>
 </div>
 
 <style>
@@ -65,6 +73,12 @@
     display: flex;
     flex-direction: column;
     gap: 28px;
+  }
+  .cols, .col { display: flex; flex-direction: column; gap: 28px; }
+  /* Layar lebar: dua kolom (koneksi/tampilan/pustaka | tautan/tentang) agar tidak satu kolom panjang di kiri. */
+  @media (min-width: 1200px) {
+    .settings { max-width: 1040px; padding: 24px 8px 56px; }
+    .cols { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 56px; align-items: start; }
   }
   h1 { font-size: 22px; font-weight: 500; letter-spacing: -0.3px; color: var(--fg); }
   h2 { font-size: 13px; font-weight: 600; color: var(--mut); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 12px; }

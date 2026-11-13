@@ -23,6 +23,7 @@ make check                     # what CI runs (tests + duplication check)
   deserve extra care; explain the threat you are addressing in the PR.
 - Pigura never modifies original files; keep it that way.
 - Code comments are currently a mix of Indonesian and English; either is fine for new code.
+- Add a one-line entry to `CHANGELOG.md` under `[Unreleased]` for user-visible changes (it is shown in Settings → About).
 - Open an issue before large features so we can agree on scope.
 
 By contributing you agree your contributions are licensed under the MIT License.

@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite';
 import { svelte } from '@sveltejs/vite-plugin-svelte';
+import { readFileSync } from 'node:fs';
+
+const { version } = JSON.parse(readFileSync(new URL('./package.json', import.meta.url), 'utf8'));
 
 // Dev proxy target. Defaults to a local backend (make run); override with VITE_API_URL
 // to point at another Pigura server.
@@ -7,11 +10,13 @@ const apiTarget = process.env.VITE_API_URL || 'http://127.0.0.1:8080';
 
 export default defineConfig({
   plugins: [svelte()],
+  define: { __APP_VERSION__: JSON.stringify(version) },
   build: {
     outDir: '../internal/web/dist',
     emptyOutDir: false, // jaga .gitkeep; Makefile membersihkan dist
   },
   server: {
+    fs: { allow: ['..'] }, // CHANGELOG.md di root repo diimpor sebagai ?raw
     proxy: {
       '/api': {
         target: apiTarget.startsWith('http') ? apiTarget : `http://${apiTarget}`,

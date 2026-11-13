@@ -6,6 +6,8 @@ WORKDIR /src/web
 COPY web/package.json web/package-lock.json ./
 RUN npm ci --no-audit --no-fund
 COPY web/ ./
+# imported by the frontend (About / changelog), lives outside web/
+COPY CHANGELOG.md /src/CHANGELOG.md
 # vite.config.js writes to ../internal/web/dist
 RUN mkdir -p /src/internal/web/dist && npm run build
 
